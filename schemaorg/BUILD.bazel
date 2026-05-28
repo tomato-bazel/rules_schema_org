@@ -61,3 +61,13 @@ sparql_query(
     out_format = "tsv",
     query = "queries/properties.rq",
 )
+
+# Gloss grounding: class/property → rdfs:label + rdfs:comment. The
+# fluency-corpus source for term↔definition tasks (gloss → canonical
+# term, term → definition) — vocabulary-constrained NL→BGP generation.
+sparql_query(
+    name = "grounding_definitions",
+    dataset = ":schemaorg_rdfs",
+    out_format = "tsv",
+    query = "queries/definitions.rq",
+)
