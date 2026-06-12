@@ -9,7 +9,7 @@
 # savvi-studio schemaorg tooling.
 module(
     name = "rules_schema_org",
-    version = "0.0.1",
+    version = "0.0.2",
 )
 
 bazel_dep(name = "platforms", version = "1.0.0")
@@ -46,12 +46,16 @@ python.toolchain(
 # ─── Pinned grounding vocabularies ────────────────────────────────
 rdf = use_extension("@rules_rdf//rdf:extensions.bzl", "rdf")
 
-# schema.org current vocabulary. Pinned by sha256 against the `latest`
-# release (schema.org doesn't serve stable per-version TTL URLs); if
-# upstream `latest` changes the sha mismatch fails loudly to re-pin.
+# schema.org vocabulary, pinned by sha256 against an IMMUTABLE
+# per-version URL — never `version/latest/`. `latest` is a moving ref:
+# when schema.org cuts a new release it re-points and the sha256 pin
+# silently breaks the fetch. schema.org *does* serve stable versioned
+# TTL (`version/<X.Y>/schemaorg-current-https.ttl`); pin that. Bump the
+# version segment + sha256 together to adopt a newer release.
+# (30.0 == the `latest` this was pinned against, so the sha is unchanged.)
 rdf.resource(
     name = "schemaorg_ttl",
-    url = "https://schema.org/version/latest/schemaorg-current-https.ttl",
+    url = "https://schema.org/version/30.0/schemaorg-current-https.ttl",
     sha256 = "320938f0945d717fc317f822c707f10944e7a7a0097018665a3b95dcf475b39d",
     format = "turtle",
 )
