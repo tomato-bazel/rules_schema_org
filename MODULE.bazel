@@ -41,12 +41,10 @@ python.toolchain(
 # ─── Pinned grounding vocabularies ────────────────────────────────
 rdf = use_extension("@rules_rdf//rdf:extensions.bzl", "rdf")
 
-# schema.org current vocabulary. Pinned by sha256 against the `latest`
-# release (schema.org doesn't serve stable per-version TTL URLs); if
-# upstream `latest` changes the sha mismatch fails loudly to re-pin.
+# Schema.org 30.0 at an immutable commit. Preserve the audited bytes and checksum.
 rdf.resource(
     name = "schemaorg_ttl",
-    url = "https://schema.org/version/latest/schemaorg-current-https.ttl",
+    url = "https://raw.githubusercontent.com/schemaorg/schemaorg/5f2d8cdec99b7329459ef6584e94b6a840f88471/data/releases/30.0/schemaorg-current-https.ttl",
     sha256 = "320938f0945d717fc317f822c707f10944e7a7a0097018665a3b95dcf475b39d",
     format = "turtle",
 )
